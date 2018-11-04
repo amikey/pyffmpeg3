@@ -18,7 +18,7 @@ ext_modules = []
 for module in ['avcodec']:
     pkg = pkgconfig.parse('lib' + module)
     cflags = pkgconfig.cflags('lib' + module)
-    ext = Extension('pyffmpeg._libavcodec_c',
+    ext = Extension('pyffmpeg._lib' + module + '_c',
                     sources=[name + '/lib' + module +'.i'],
                     include_dirs=[np.get_include()] + pkg['include_dirs'],
                     libraries=[module],
