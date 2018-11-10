@@ -18,12 +18,15 @@ ext_modules = []
 for module in ['avcodec']:
     pkg = pkgconfig.parse('lib' + module)
     cflags = pkgconfig.cflags('lib' + module)
+    print(cflags)
+    print(pkg['library_dirs'])
     ext = Extension('pyffmpeg._lib' + module + '_c',
                     sources=[name + '/lib' + module +'.i'],
                     include_dirs=[np.get_include()] + pkg['include_dirs'],
                     libraries=[module],
                     library_dirs=pkg['library_dirs'],
-                    swig_opts=['-modern', '-py3', '-noolddefs',
+                    swig_opts=['-modern', '-modernargs', '-py3',
+                               '-noolddefs',
                                '-relativeimport',
                                cflags]
                     )

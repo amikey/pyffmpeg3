@@ -1,4 +1,4 @@
-%module(threads="1", moduleimport="from . import $module") libavcodec_c
+%module(moduleimport="from . import $module") libavcodec_c
 
 %{
 #include "libavcodec/avcodec.h"
@@ -47,5 +47,3 @@
 %include <libavutil/log.h>
 %include <libavutil/pixfmt.h>
 %include <libavutil/rational.h>
-
-%include <libavcodec/avcodec.h>
