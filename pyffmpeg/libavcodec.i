@@ -2,7 +2,13 @@
 
 %{
 #include "libavcodec/avcodec.h"
+#include "libavutil/frame.h"
 %}
+
+%include <stdint.i>
+%include <typemaps.i>
+// %include <attribute.i>
+// %include "numpy.i"
 
 // Deprecated functions, just don't include them. This is a modern wrapper.
 %ignore refcounted_frames;
@@ -36,14 +42,3 @@
 %include <libavutil/rational.h>
 
 %include <libavcodec/avcodec.h>
-%include <libavutil/samplefmt.h>
-%include <libavutil/attributes.h>
-%include <libavutil/avutil.h>
-%include <libavutil/buffer.h>
-%include <libavutil/cpu.h>
-%include <libavutil/channel_layout.h>
-%include <libavutil/dict.h>
-%include <libavutil/frame.h>
-%include <libavutil/log.h>
-%include <libavutil/pixfmt.h>
-%include <libavutil/rational.h>

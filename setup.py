@@ -15,7 +15,7 @@ requirements = ['numpy', ]
 test_requirements = ['pytest', ]
 
 ext_modules = []
-for module in ['avcodec']:
+for module in ['avcodec', 'avutil']:
     pkg = pkgconfig.parse('lib' + module)
     cflags = pkgconfig.cflags('lib' + module)
     print(cflags)
