@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
+
+import numpy as np
+import pkgconfig
+name = 'pyffmpeg'
 
 with open('README.md') as readme_file:
     readme = readme_file.read()
@@ -8,8 +12,25 @@ with open('HISTORY.md') as history_file:
     history = history_file.read()
 
 requirements = ['numpy', ]
-
 test_requirements = ['pytest', ]
+
+ext_modules = []
+for module in ['avcodec', 'avutil']:
+    pkg = pkgconfig.parse('lib' + module)
+    cflags = pkgconfig.cflags('lib' + module)
+    print(cflags)
+    print(pkg['library_dirs'])
+    ext = Extension('pyffmpeg._lib' + module + '_c',
+                    sources=[name + '/lib' + module +'.i'],
+                    include_dirs=[np.get_include()] + pkg['include_dirs'],
+                    libraries=[module],
+                    library_dirs=pkg['library_dirs'],
+                    swig_opts=['-modern', '-modernargs', '-py3',
+                               '-noolddefs',
+                               '-relativeimport',
+                               cflags]
+                    )
+    ext_modules.append(ext)
 
 def get_version_and_cmdclass(package_path):
     import os
@@ -44,6 +65,7 @@ setup(
     keywords='pyffmpeg',
     name='pyffmpeg',
     packages=find_packages(include=['pyffmpeg']),
+    ext_modules=ext_modules,
     tests_require=test_requirements,
     url='https://github.com/hmaarrfk/pyffmpeg',
     version=version,
